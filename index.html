@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>music player</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>MUSIC PLAYER</h1>
+    <div class="container">
+        <div class="contain0" id="stop0"></div>
+        <div class="contain1" id="stop1"></div>
+        <div class="contain2" id="stop2"></div>
+        <div class="contain3" id="stop3"></div>
+        <div class="contain4" id="stop4"></div>
+        <div class="contain5" id="stop5"></div>
+        <div class="contain6" id="stop6"></div>
+    </div>
+    <div class="controls">
+    <audio controls autoplay>
+        <source src="./song/ImagineDragonsBelieverLyrics.mp3" preload="metadata"  type="audio/mp3">
+      Your browser does not support the audio element.
+      </audio>
+      <button id="btn" onclick="play()"><i class="fas fa-play"></i></button>
+    
+      <button onclick="stop()"><i class="fas fa-stop"></i></button>
+
+      <input type="range" id="volume" onchange="sound()" step="0.05" min="0" max="1" value="1"><span id="volume_icon" onclick="mute()"><i class="fas fa-volume-up"></i></span>
+</div>
+    </div>
+
+
+      <script>
+
+var audio = document.querySelector("audio");
+  var contain0 =document.querySelector(".contain0");
+  var contain1 =document.querySelector(".contain1");
+  var contain2 =document.querySelector(".contain2");
+  var contain3 =document.querySelector(".contain3");
+  var contain4 =document.querySelector(".contain4");
+  var contain5 =document.querySelector(".contain5");
+  var contain6 =document.querySelector(".contain6");
+  var btn = document.querySelector("#btn")
+  var volume_icon = document.querySelector("#volume_icon");
+  let state = 'play';
+  let muted =false;
+ audio.pause();
+
+
+// for volume increase and decrease using input range value
+function sound()
+{
+ audio.volume=document.getElementById("volume").value;
+}
+
+// for audio to stop 
+function stop() 
+{
+ audio.pause();
+ audio.currentTime = 0;
+ for(i=0;i<7;i++){
+    var Animation=document.getElementById(`stop${i}`);
+    Animation.style="animation:none;"
+}
+btn.innerHTML=`<i class="fas fa-play"></i>`;
+
+state='play';
+}
+
+// for playing an audio
+function play(){
+
+    if(state === 'play') {
+        btn.innerHTML=`<i class="fas fa-pause"></i>`;
+        contain0.style="animation: rotate 0.6s cubic-bezier(0.42, 0, 0.65, 0.38) 1s infinite alternate forwards;";
+contain1.style="animation: rotate 0.8s cubic-bezier(0.42, 0, 0.65, 0.38) 1s infinite alternate forwards;";
+contain2.style="animation: rotate 0.5s linear 1s infinite alternate forwards;";
+contain3.style="animation: rotate 0.8s cubic-bezier(0.42, 0, 0.65, 0.38) 1s infinite alternate forwards;";
+contain4.style="animation: rotate 0.6s linear 1s infinite alternate forwards;";
+contain5.style="animation: rotate 0.9s linear 1s  infinite alternate forwards;";
+contain6.style="animation: rotate 0.7s linear 1s infinite alternate forwards;";
+audio.play();
+
+
+        state = 'pause';
+    } else {
+        btn.innerHTML=`<i class="fas fa-play"></i>`;
+
+        for(i=0;i<7;i++){
+    var Animation=document.getElementById(`stop${i}`);
+    Animation.style="animation:none";
+
+}
+contain0.style="height:100px";
+contain1.style="height:150px";
+contain2.style="height:300px";
+contain3.style="height:100px";
+contain4.style="height:300px";
+contain5.style="height:150px";
+contain6.style="height:100px";
+
+        audio.pause();
+        state = 'play';
+                
+}
+}
+
+function mute(){
+    if(muted === false) {
+        audio.muted = false;
+
+        volume_icon.innerHTML=` <i class="fas fa-volume-up"></i> `;
+
+        muted = true;
+    } else {
+        audio.muted = true;
+        volume_icon.innerHTML=` <i class="fas fa-volume-mute"></i> `;
+        muted = false;
+    }
+}
+
+ </script>
+</body>
+</html>
